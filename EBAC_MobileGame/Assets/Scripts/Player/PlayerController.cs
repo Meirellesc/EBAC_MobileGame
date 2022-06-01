@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Singleton<PlayerController>
 {
     [Header("Player Attributes")]
-    public float speed = 1f;
+    public float initialSpeed = 1f;
 
     [Header("Lerp")]
     public Transform target;
@@ -22,6 +22,13 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 _pos;
     private bool _canRun;
+    [SerializeField] private float _currentSpeed;
+
+    #region Start / Update
+    private void Start()
+    {
+        ResetSpeed();
+    }
 
     // Update is called once per frame
     void Update()
@@ -31,11 +38,12 @@ public class PlayerController : MonoBehaviour
         MovePlayer();
         MoveLerp(target);
     }
+    #endregion
 
     #region Movement
     private void MovePlayer()
     {
-        transform.Translate(transform.forward * speed * Time.deltaTime);
+        transform.Translate(transform.forward * _currentSpeed * Time.deltaTime);
     }
 
     private void MoveLerp(Transform target)
@@ -52,6 +60,17 @@ public class PlayerController : MonoBehaviour
     public void SetRun(bool run)
     {
         _canRun = run;
+    }
+
+    public void SetSpeed(float speed)
+    {
+        _currentSpeed = speed;
+    }
+
+
+    public void ResetSpeed()
+    {
+        _currentSpeed = initialSpeed;
     }
     #endregion
 
@@ -85,6 +104,13 @@ public class PlayerController : MonoBehaviour
     {
         SetRun(false);
         endScreenUI.SetActive(true);
+    }
+    #endregion
+
+    #region Power Up Actions
+    public void PowerUpSpeedUp(float speedToIncrease)
+    {
+        SetSpeed(speedToIncrease);
     }
     #endregion
 }
