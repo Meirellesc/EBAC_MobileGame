@@ -13,13 +13,9 @@ public class PowerUpBase : ItemCollectableBase
     }
 
     protected virtual void StartPowerUp()
-    {
-        Debug.Log("Start Power Up");
+    { 
         Invoke(nameof(EndPowerUp), duration);
     }
 
-    protected virtual void EndPowerUp()
-    {
-        Debug.Log("End Power Up");
-    }
+    protected virtual void EndPowerUp() { }
 }

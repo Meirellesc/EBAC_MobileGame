@@ -141,7 +141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTag: Player
-  timeToHide: 3
+  timeToHide: 0
   graphicItem: {fileID: 0}
   particleSystem: {fileID: 0}
   audioSource: {fileID: 0}

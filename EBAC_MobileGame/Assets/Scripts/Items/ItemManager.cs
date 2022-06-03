@@ -3,19 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class ItemManager : MonoBehaviour
+public class ItemManager : Singleton<ItemManager>
 {
-    public static ItemManager Instance;
-
     [Header("Items")]
     public int coins;
 
     [Header("UI")]
     public TMP_Text pointsUI;
 
-    private void Awake()
+    private void Start()
     {
-        Instance = this;
         Reset();
     }
 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class PlayerController : Singleton<PlayerController>
 {
@@ -20,13 +21,18 @@ public class PlayerController : Singleton<PlayerController>
     public GameObject startScreenUI;
     public GameObject endScreenUI;
 
+    [Header("Text")]
+    public TextMeshPro uiTextPowerUp;
+
     private Vector3 _pos;
     private bool _canRun;
-    [SerializeField] private float _currentSpeed;
+    private float _currentSpeed;
+    private bool _isInvencible;
 
     #region Start / Update
     private void Start()
     {
+        uiTextPowerUp.text = "";
         ResetSpeed();
     }
 
@@ -79,7 +85,10 @@ public class PlayerController : Singleton<PlayerController>
     {
         if(collision.transform.CompareTag(tagEnemy))
         {
-            EndGame();
+            if (!_isInvencible)
+            {
+                EndGame();
+            }
         }
     }
 
@@ -108,9 +117,33 @@ public class PlayerController : Singleton<PlayerController>
     #endregion
 
     #region Power Up Actions
-    public void PowerUpSpeedUp(float speedToIncrease)
+    public void SetUiTextPowerUp(string text = "")
+    {
+        uiTextPowerUp.text = text;
+    }
+
+    public void SetPowerUpSpeedUp(float speedToIncrease)
     {
         SetSpeed(speedToIncrease);
+        SetUiTextPowerUp("Speed Up");
+    }
+
+    public void ResetPowerUpSpeedUp()
+    {
+        ResetSpeed();
+        SetUiTextPowerUp();
+    }
+
+    public void SetPowerUpInvencible()
+    {
+        _isInvencible = true;
+        SetUiTextPowerUp("Invencible");
+    }
+
+    public void ResetPowerUpInvencible()
+    {
+        _isInvencible = false;
+        SetUiTextPowerUp();
     }
     #endregion
 }

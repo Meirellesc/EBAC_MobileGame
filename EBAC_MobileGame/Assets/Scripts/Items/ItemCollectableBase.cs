@@ -8,7 +8,7 @@ public class ItemCollectableBase : MonoBehaviour
     public float timeToHide = 3f;
 
     public GameObject graphicItem;
-    public ParticleSystem particleSystem;
+    //public ParticleSystem particleSystem;
 
     [Header("Sounds")]
     public AudioSource audioSource;
@@ -23,7 +23,6 @@ public class ItemCollectableBase : MonoBehaviour
 
     private void Collect()
     {
-        graphicItem?.SetActive(false);
         Invoke(nameof(HideObject), timeToHide);
         OnCollect();
     }
@@ -35,7 +34,6 @@ public class ItemCollectableBase : MonoBehaviour
 
     protected virtual void OnCollect()
     {
-        ItemManager.Instance.AddCoins();
         //particleSystem?.Play();
         //audioSource?.Play();
     }
