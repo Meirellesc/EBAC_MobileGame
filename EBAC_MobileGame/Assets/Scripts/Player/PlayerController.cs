@@ -3,9 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
+using DG.Tweening;
 
 public class PlayerController : Singleton<PlayerController>
 {
+    public enum LastPowerUp
+    {
+        SPEED_UP,
+        INVENCIBLE,
+        FLY
+    }
+
     [Header("Player Attributes")]
     public float initialSpeed = 1f;
 
@@ -28,11 +36,14 @@ public class PlayerController : Singleton<PlayerController>
     private bool _canRun;
     private float _currentSpeed;
     private bool _isInvencible;
+    private Vector3 _startPosition;
+    private LastPowerUp _lastPowerUp;
 
     #region Start / Update
     private void Start()
     {
         uiTextPowerUp.text = "";
+        _startPosition = transform.position;
         ResetSpeed();
     }
 
@@ -68,15 +79,25 @@ public class PlayerController : Singleton<PlayerController>
         _canRun = run;
     }
 
-    public void SetSpeed(float speed)
+    private void SetSpeed(float speed)
     {
         _currentSpeed = speed;
     }
 
 
-    public void ResetSpeed()
+    private void ResetSpeed()
     {
         _currentSpeed = initialSpeed;
+    }
+
+    private void SetHeight(float height, float powerUpDuration, float animDuration, Ease ease)
+    {
+        transform.DOMoveY(height, animDuration).SetEase(ease);
+    }
+
+    private void ResetHeight(float animDuration, Ease ease)
+    {
+        transform.DOMoveY(_startPosition.y, animDuration).SetEase(ease);
     }
     #endregion
 
@@ -124,18 +145,20 @@ public class PlayerController : Singleton<PlayerController>
 
     public void SetPowerUpSpeedUp(float speedToIncrease)
     {
+        _lastPowerUp = LastPowerUp.SPEED_UP;
         SetSpeed(speedToIncrease);
-        SetUiTextPowerUp("Speed Up");
+        SetUiTextPowerUp("Speeding Up");
     }
 
     public void ResetPowerUpSpeedUp()
     {
         ResetSpeed();
-        SetUiTextPowerUp();
+        if (_lastPowerUp == LastPowerUp.SPEED_UP) { SetUiTextPowerUp(); }
     }
 
     public void SetPowerUpInvencible()
     {
+        _lastPowerUp = LastPowerUp.INVENCIBLE;
         _isInvencible = true;
         SetUiTextPowerUp("Invencible");
     }
@@ -143,7 +166,21 @@ public class PlayerController : Singleton<PlayerController>
     public void ResetPowerUpInvencible()
     {
         _isInvencible = false;
+        if (_lastPowerUp == LastPowerUp.INVENCIBLE) { SetUiTextPowerUp(); }
+    }
+
+    public void SetPowerUpFly(float height, float powerUpDuration, float animDuration, Ease ease)
+    {
+        _lastPowerUp = LastPowerUp.FLY;
+        SetUiTextPowerUp("Flying");
+        SetHeight(height, powerUpDuration, animDuration, ease);
+    }
+
+    public void ResetPowerUpFly(float animDuration, Ease ease)
+    {
         SetUiTextPowerUp();
+        ResetHeight(animDuration, ease);
+        if (_lastPowerUp == LastPowerUp.FLY) { SetUiTextPowerUp(); }
     }
     #endregion
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PowerUpSpeed : PowerUpBase
 {
-    [Header("Power Up Speed Up")]
+    [Header("Speed Attribute")]
     public float amountToSpeed;
 
     protected override void StartPowerUp()
