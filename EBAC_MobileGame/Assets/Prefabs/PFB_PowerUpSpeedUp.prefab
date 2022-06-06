@@ -140,10 +140,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3dad37365043d4acabe9039afea735c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTag: Player
+  collectorTag: Player
   timeToHide: 0
-  graphicItem: {fileID: 0}
-  particleSystem: {fileID: 0}
+  graphicItem: {fileID: 1873433832481212500}
   audioSource: {fileID: 0}
-  duration: 0
-  amountToSpeed: 0
+  duration: 3
+  amountToSpeed: 10

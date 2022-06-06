@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using System;
 using DG.Tweening;
+using Cinemachine;
 
 public class PlayerController : Singleton<PlayerController>
 {
@@ -11,39 +12,53 @@ public class PlayerController : Singleton<PlayerController>
     {
         SPEED_UP,
         INVENCIBLE,
-        FLY
+        FLY,
+        COIN_COLLECTOR
     }
 
     [Header("Player Attributes")]
-    public float initialSpeed = 1f;
+    public float InitialSpeed = 1f;
 
     [Header("Lerp")]
-    public Transform target;
-    public float lerpSpeed = 1f;
+    public Transform TargetLerp;
+    public float LerpSpeed = 1f;
 
     [Header("Tags")]
-    public string tagEnemy = "Enemy";
-    public string tagEndLine = "EndLine";
+    public string TagEnemy = "Enemy";
+    public string TagEndLine = "EndLine";
+    public string TagLeftCamera = "LeftCamera";
+    public string TagRightCamera = "RightCamera";
+    public string TagUpCamera = "UpCamera";
+
+    [Header("Camera Settings")]
+    public CinemachineVirtualCamera CameraRight;
+    public CinemachineVirtualCamera CameraUp;
+    public CinemachineVirtualCamera CameraLeft;
 
     [Header("Screens")]
-    public GameObject startScreenUI;
-    public GameObject endScreenUI;
+    public GameObject StartScreenUI;
+    public GameObject EndScreenUI;
+
+    [Header("Coin Collector")]
+    public GameObject CoinCollector;
 
     [Header("Text")]
-    public TextMeshPro uiTextPowerUp;
+    public TextMeshPro UiTextPowerUp;
 
     private Vector3 _pos;
     private bool _canRun;
     private float _currentSpeed;
     private bool _isInvencible;
     private Vector3 _startPosition;
+    private Vector3 _initialCoinCollectorScale;
     private LastPowerUp _lastPowerUp;
 
     #region Start / Update
     private void Start()
     {
-        uiTextPowerUp.text = "";
+        UiTextPowerUp.text = "";
         _startPosition = transform.position;
+        _initialCoinCollectorScale = CoinCollector.transform.localScale;
         ResetSpeed();
     }
 
@@ -53,7 +68,7 @@ public class PlayerController : Singleton<PlayerController>
         if (!_canRun) { return; }
 
         MovePlayer();
-        MoveLerp(target);
+        MoveLerp(TargetLerp);
     }
     #endregion
 
@@ -69,7 +84,7 @@ public class PlayerController : Singleton<PlayerController>
         _pos.y = transform.position.y;
         _pos.z = transform.position.z;
 
-        transform.position = Vector3.Lerp(transform.position, _pos, lerpSpeed * Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, _pos, LerpSpeed * Time.deltaTime);
     }
     #endregion
 
@@ -87,7 +102,7 @@ public class PlayerController : Singleton<PlayerController>
 
     private void ResetSpeed()
     {
-        _currentSpeed = initialSpeed;
+        _currentSpeed = InitialSpeed;
     }
 
     private void SetHeight(float height, float powerUpDuration, float animDuration, Ease ease)
@@ -99,15 +114,28 @@ public class PlayerController : Singleton<PlayerController>
     {
         transform.DOMoveY(_startPosition.y, animDuration).SetEase(ease);
     }
+
+    private void SetCoinCollectorRadius(float radius)
+    {
+        CoinCollector.transform.localScale = Vector3.one * radius;
+    }
+
+    private void ResetCoinCollectorRadius()
+    {
+        CoinCollector.transform.localScale = _initialCoinCollectorScale;
+    }
     #endregion
 
     #region Colliders
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.transform.CompareTag(tagEnemy))
+        if(collision.transform.CompareTag(TagEnemy))
         {
             if (!_isInvencible)
             {
+                Debug.Log($"Collidion.Tag = [{collision.gameObject.tag}]");
+                Debug.Log($"This.Tag = [{this.tag}]");
+
                 EndGame();
             }
         }
@@ -115,9 +143,28 @@ public class PlayerController : Singleton<PlayerController>
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.transform.tag == tagEndLine)
+        if(other.transform.tag == TagEndLine)
         {
             EndGame(); 
+        }
+
+        if (other.transform.tag == TagLeftCamera)
+        {
+            CameraRight.gameObject.SetActive(false);
+            CameraUp.gameObject.SetActive(false);
+            CameraLeft.gameObject.SetActive(true);
+        }
+        else if (other.transform.tag == TagRightCamera)
+        {
+            CameraLeft.gameObject.SetActive(false);
+            CameraUp.gameObject.SetActive(false);
+            CameraRight.gameObject.SetActive(true);
+        }
+        else if (other.transform.tag == TagUpCamera)
+        {
+            CameraLeft.gameObject.SetActive(false);
+            CameraRight.gameObject.SetActive(false);
+            CameraUp.gameObject.SetActive(true);
         }
     }
     #endregion
@@ -126,21 +173,21 @@ public class PlayerController : Singleton<PlayerController>
     public void StartGame()
     {
         SetRun(true);
-        startScreenUI.SetActive(false);
-        endScreenUI.SetActive(false);
+        StartScreenUI.SetActive(false);
+        EndScreenUI.SetActive(false);
     }
 
     public void EndGame()
     {
         SetRun(false);
-        endScreenUI.SetActive(true);
+        EndScreenUI.SetActive(true);
     }
     #endregion
 
     #region Power Up Actions
     public void SetUiTextPowerUp(string text = "")
     {
-        uiTextPowerUp.text = text;
+        UiTextPowerUp.text = text;
     }
 
     public void SetPowerUpSpeedUp(float speedToIncrease)
@@ -178,9 +225,21 @@ public class PlayerController : Singleton<PlayerController>
 
     public void ResetPowerUpFly(float animDuration, Ease ease)
     {
-        SetUiTextPowerUp();
         ResetHeight(animDuration, ease);
         if (_lastPowerUp == LastPowerUp.FLY) { SetUiTextPowerUp(); }
+    }
+
+    public void SetPowerUpCoinCollector(float radius)
+    {
+        _lastPowerUp = LastPowerUp.COIN_COLLECTOR;
+        SetUiTextPowerUp("Coin Collector");
+        SetCoinCollectorRadius(radius);
+    }
+
+    public void ResetPowerUpCoinCollector()
+    {
+        ResetCoinCollectorRadius();
+        if (_lastPowerUp == LastPowerUp.COIN_COLLECTOR) { SetUiTextPowerUp(); }
     }
     #endregion
 }

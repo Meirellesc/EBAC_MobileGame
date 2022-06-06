@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ItemCollectableBase : MonoBehaviour
 {
-    public string playerTag = "Player";
+    public string collectorTag = "Player";
     public float timeToHide = 3f;
 
     public GameObject graphicItem;
@@ -15,19 +15,13 @@ public class ItemCollectableBase : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.transform.CompareTag(playerTag))
+        if(other.transform.CompareTag(collectorTag))
         {
-            Collect();
+            OnCollect();
         }
     }
 
-    private void Collect()
-    {
-        Invoke(nameof(HideObject), timeToHide);
-        OnCollect();
-    }
-
-    private void HideObject()
+    protected virtual void HideObject()
     {
         gameObject.SetActive(false);
     }

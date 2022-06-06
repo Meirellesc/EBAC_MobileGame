@@ -140,11 +140,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cb0f94d2c66844a3944ebda402450bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTag: Player
+  collectorTag: Player
   timeToHide: 0
   graphicItem: {fileID: 1873433832481212500}
   audioSource: {fileID: 0}
-  duration: 4
+  duration: 3
   AmountHeight: 2
   AnimDuration: 0.5
   Ease: 27

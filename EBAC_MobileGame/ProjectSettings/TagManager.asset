@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Enemy
   - EndLine
+  - CoinCollector
+  - LeftCamera
+  - RightCamera
+  - UpCamera
   layers:
   - Default
   - TransparentFX
