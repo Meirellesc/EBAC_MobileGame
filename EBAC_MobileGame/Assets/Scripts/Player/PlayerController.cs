@@ -16,12 +16,10 @@ public class PlayerController : Singleton<PlayerController>
         COIN_COLLECTOR
     }
 
-    [Header("Player Attributes")]
-    public float InitialSpeed = 1f;
-
-    [Header("Lerp")]
+    [Header("Movement Attributes")]
     public Transform TargetLerp;
     public float LerpSpeed = 1f;
+    public float InitialSpeed = 1f;
 
     [Header("Tags")]
     public string TagEnemy = "Enemy";
@@ -39,8 +37,11 @@ public class PlayerController : Singleton<PlayerController>
     public GameObject StartScreenUI;
     public GameObject EndScreenUI;
 
-    [Header("Coin Collector")]
+    [Header("Coin Setup")]
     public GameObject CoinCollector;
+
+    [Header("Animator")]
+    public AnimatorManager AnimatorManager;
 
     [Header("Text")]
     public TextMeshPro UiTextPowerUp;
@@ -52,6 +53,7 @@ public class PlayerController : Singleton<PlayerController>
     private Vector3 _startPosition;
     private Vector3 _initialCoinCollectorScale;
     private LastPowerUp _lastPowerUp;
+    private float _baseSpeedToAnimation = 7f;
 
     #region Start / Update
     private void Start()
@@ -85,6 +87,11 @@ public class PlayerController : Singleton<PlayerController>
         _pos.z = transform.position.z;
 
         transform.position = Vector3.Lerp(transform.position, _pos, LerpSpeed * Time.deltaTime);
+    }
+
+    private void MoveTransformZ(Transform transform, float endValue, float duration)
+    {
+        transform.DOMoveZ(endValue, duration).SetRelative();
     }
     #endregion
 
@@ -133,10 +140,9 @@ public class PlayerController : Singleton<PlayerController>
         {
             if (!_isInvencible)
             {
-                Debug.Log($"Collidion.Tag = [{collision.gameObject.tag}]");
-                Debug.Log($"This.Tag = [{this.tag}]");
-
-                EndGame();
+                MoveTransformZ(collision.transform, 0.7f, 0.3f);
+                MoveTransformZ(this.transform, -0.7f, 0.3f);
+                EndGame(AnimatorManager.AnimationType.DEAD);
             }
         }
     }
@@ -145,7 +151,7 @@ public class PlayerController : Singleton<PlayerController>
     {
         if(other.transform.tag == TagEndLine)
         {
-            EndGame(); 
+            EndGame(AnimatorManager.AnimationType.IDLE); 
         }
 
         if (other.transform.tag == TagLeftCamera)
@@ -175,12 +181,15 @@ public class PlayerController : Singleton<PlayerController>
         SetRun(true);
         StartScreenUI.SetActive(false);
         EndScreenUI.SetActive(false);
+
+        AnimatorManager.Play(AnimatorManager.AnimationType.RUN, _currentSpeed / _baseSpeedToAnimation);
     }
 
-    public void EndGame()
+    public void EndGame(AnimatorManager.AnimationType animType)
     {
         SetRun(false);
         EndScreenUI.SetActive(true);
+        AnimatorManager.Play(animType);
     }
     #endregion
 
