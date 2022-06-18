@@ -9,20 +9,12 @@ public class LevelManager : MonoBehaviour
 
     public List<GameObject> Levels;
 
-    [Header("Pieces List")]
-    public List<LevelPieceBase> LevelPiecesMiddle;
-    public List<LevelPieceBase> LevelPiecesStart;
-    public List<LevelPieceBase> LevelPiecesEnd;
+    public List<LevelPieceBaseSetup> LevelPieceBaseSetups;
 
-    [Header("Pieces' Quantity")]
-    public int pieceNumberMiddle = 5;
-    public int pieceNumberStart = 3;
-    public int pieceNumberEnd = 1;
-
-
-    [SerializeField] private int _index;
+    private int _index;
     private GameObject _currentLevel;
-    private List<LevelPieceBase> _spawnedPieces;
+    private List<LevelPieceBase> _spawnedPieces = new List<LevelPieceBase>();
+    private LevelPieceBaseSetup _currentPBSetup;
 
     #region Start / Update
     private void Awake()
@@ -35,7 +27,8 @@ public class LevelManager : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Alpha1))
         {
-            SpawnNextLevel();
+            //SpawnNextLevel();
+            CreateLevelPieces();
         }
     }
     #endregion
@@ -67,21 +60,33 @@ public class LevelManager : MonoBehaviour
     #region Piece
     private void CreateLevelPieces()
     {
-        _spawnedPieces = new List<LevelPieceBase>();
+        CleanSpawnedPieces();
 
-        for (int i = 0; i < pieceNumberStart; i++)
+        if(_currentPBSetup != null)
         {
-            CreateLevelPiece(LevelPiecesStart);
+            _index++;
+
+            if(_index >= LevelPieceBaseSetups.Count)
+            {
+                ResetLevelIndex();
+            }
         }
 
-        for (int i = 0; i < pieceNumberMiddle; i++)
+        _currentPBSetup = LevelPieceBaseSetups[_index];
+
+        for (int i = 0; i < _currentPBSetup.pieceNumberStart; i++)
         {
-            CreateLevelPiece(LevelPiecesMiddle);
+            CreateLevelPiece(_currentPBSetup.LevelPiecesStart);
         }
 
-        for (int i = 0; i < pieceNumberEnd; i++)
+        for (int i = 0; i < _currentPBSetup.pieceNumberMiddle; i++)
         {
-            CreateLevelPiece(LevelPiecesEnd);
+            CreateLevelPiece(_currentPBSetup.LevelPiecesMiddle);
+        }
+
+        for (int i = 0; i < _currentPBSetup.pieceNumberEnd; i++)
+        {
+            CreateLevelPiece(_currentPBSetup.LevelPiecesEnd);
         }
     }
 
@@ -101,9 +106,34 @@ public class LevelManager : MonoBehaviour
 
             spawnedPiece.transform.position = lastPiece.EndPiece.position;
         }
+        else
+        {
+            spawnedPiece.transform.localPosition = Vector3.zero;
+        }
+
+        List<ArtPiece> currentArtPieces = spawnedPiece.GetComponentsInChildren<ArtPiece>().ToList();
+
+        if (currentArtPieces != null && currentArtPieces.Count > 0)
+        {
+            foreach (ArtPiece currentArtPiece in currentArtPieces)
+            {
+                GameObject artPieceToUpdate = ArtManager.Instance.GetArtSetupByType(_currentPBSetup.ArtType).GameObject;
+                currentArtPiece.ChangeArtPiece(artPieceToUpdate);
+            }
+        }
 
         // Fix the position of the new piece, conecting it with the last one
         _spawnedPieces.Add(spawnedPiece);
+    }
+
+    private void CleanSpawnedPieces()
+    {
+        for(int i = _spawnedPieces.Count - 1; i > 0; i--)
+        {
+            Destroy(_spawnedPieces[i].gameObject);
+        }
+
+        _spawnedPieces.Clear();
     }
     #endregion
 
