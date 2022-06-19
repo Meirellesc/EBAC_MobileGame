@@ -62,6 +62,7 @@ public class LevelManager : MonoBehaviour
     {
         CleanSpawnedPieces();
 
+        // Check the index of level piece base setup
         if(_currentPBSetup != null)
         {
             _index++;
@@ -72,22 +73,29 @@ public class LevelManager : MonoBehaviour
             }
         }
 
+        // Get the current level piece base setup
         _currentPBSetup = LevelPieceBaseSetups[_index];
 
+        // Instantiate the start pieces
         for (int i = 0; i < _currentPBSetup.pieceNumberStart; i++)
         {
             CreateLevelPiece(_currentPBSetup.LevelPiecesStart);
         }
 
+        // Instantiate the middle pieces
         for (int i = 0; i < _currentPBSetup.pieceNumberMiddle; i++)
         {
             CreateLevelPiece(_currentPBSetup.LevelPiecesMiddle);
         }
 
+        // Instantiate the end pieces
         for (int i = 0; i < _currentPBSetup.pieceNumberEnd; i++)
         {
             CreateLevelPiece(_currentPBSetup.LevelPiecesEnd);
         }
+
+        // Change the colors of scenario accordlying of current setup art type
+        ColorManager.Instance.ChangeColorByType(_currentPBSetup.ArtType);
     }
 
     private void CreateLevelPiece(List<LevelPieceBase> levelPieces)

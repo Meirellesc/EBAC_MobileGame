@@ -25,6 +25,5 @@ public class ArtManager : Singleton<ArtManager>
 public class ArtSetup
 {
     public ArtManager.ArtType ArtType;
-
     public GameObject GameObject;
 }

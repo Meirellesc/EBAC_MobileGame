@@ -10,15 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3146e6b2caf3a42deb45728275b1bb41, type: 3}
-  m_Name: Level01
+  m_Name: Level03
   m_EditorClassIdentifier: 
   LevelPiecesStart:
   - {fileID: 3734667028526003943, guid: efa62cf4bb5a842f394e5c6394545ae9, type: 3}
+  - {fileID: 3734667028526003943, guid: 218dad072dee3496bbb7c40ad64c4dae, type: 3}
   LevelPiecesMiddle:
-  - {fileID: 3734667028526003943, guid: 3e54ed5145d574e64b22aeb76888cd5e, type: 3}
+  - {fileID: 5979806216272965828, guid: 272da2a57f7fe4dee9bcf4dc22269382, type: 3}
+  - {fileID: 5979806216272965828, guid: 3fdc9e60ddb6b4cce84e52c4887d54dd, type: 3}
+  - {fileID: 5979806216272965828, guid: 38045fb306b684822ae3fd21ce7a3aa6, type: 3}
+  - {fileID: 5979806216272965828, guid: 272da2a57f7fe4dee9bcf4dc22269382, type: 3}
   LevelPiecesEnd:
   - {fileID: 3734667028526003943, guid: 60a8f4b89ef064d7f936160a7a1633ac, type: 3}
-  pieceNumberStart: 1
-  pieceNumberMiddle: 1
+  pieceNumberStart: 3
+  pieceNumberMiddle: 7
   pieceNumberEnd: 1
-  ArtType: 0
+  ArtType: 2

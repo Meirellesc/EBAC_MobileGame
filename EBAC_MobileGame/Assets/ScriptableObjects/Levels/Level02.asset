@@ -14,9 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LevelPiecesStart:
   - {fileID: 3734667028526003943, guid: efa62cf4bb5a842f394e5c6394545ae9, type: 3}
+  - {fileID: 3734667028526003943, guid: 218dad072dee3496bbb7c40ad64c4dae, type: 3}
   LevelPiecesMiddle:
   - {fileID: 3734667028526003943, guid: 3e54ed5145d574e64b22aeb76888cd5e, type: 3}
-  - {fileID: 5979806216272965828, guid: 272da2a57f7fe4dee9bcf4dc22269382, type: 3}
+  - {fileID: 5979806216272965828, guid: b2bd4ba99f83b4a318814c0a15a0a997, type: 3}
+  - {fileID: 5979806216272965828, guid: 38045fb306b684822ae3fd21ce7a3aa6, type: 3}
   LevelPiecesEnd:
   - {fileID: 3734667028526003943, guid: 60a8f4b89ef064d7f936160a7a1633ac, type: 3}
   pieceNumberStart: 2
