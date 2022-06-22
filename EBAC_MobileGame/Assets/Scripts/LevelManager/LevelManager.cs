@@ -17,7 +17,7 @@ public class LevelManager : MonoBehaviour
     private LevelPieceBaseSetup _currentPBSetup;
 
     #region Start / Update
-    private void Awake()
+    private void Start()
     {
         //SpawnNextLevel();
         CreateLevelPieces();
