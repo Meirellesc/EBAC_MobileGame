@@ -41,7 +41,7 @@ public class PlayerController : Singleton<PlayerController>
     public GameObject CoinCollector;
 
     [Header("Animator")]
-    public AnimatorManager AnimatorManager;
+    public PlayerAnimatorManager AnimatorManager;
 
     [Header("Text")]
     public TextMeshPro UiTextPowerUp;
@@ -142,7 +142,7 @@ public class PlayerController : Singleton<PlayerController>
             {
                 MoveTransformZ(collision.transform, 0.7f, 0.3f);
                 MoveTransformZ(this.transform, -0.7f, 0.3f);
-                EndGame(AnimatorManager.AnimationType.DEAD);
+                EndGame(PlayerAnimatorManager.AnimationType.DEAD);
             }
         }
     }
@@ -151,7 +151,7 @@ public class PlayerController : Singleton<PlayerController>
     {
         if(other.transform.tag == TagEndLine)
         {
-            EndGame(AnimatorManager.AnimationType.IDLE); 
+            EndGame(PlayerAnimatorManager.AnimationType.IDLE); 
         }
 
         if (other.transform.tag == TagLeftCamera)
@@ -182,10 +182,10 @@ public class PlayerController : Singleton<PlayerController>
         StartScreenUI.SetActive(false);
         EndScreenUI.SetActive(false);
 
-        AnimatorManager.Play(AnimatorManager.AnimationType.RUN, _currentSpeed / _baseSpeedToAnimation);
+        AnimatorManager.Play(PlayerAnimatorManager.AnimationType.RUN, _currentSpeed / _baseSpeedToAnimation);
     }
 
-    public void EndGame(AnimatorManager.AnimationType animType)
+    public void EndGame(PlayerAnimatorManager.AnimationType animType)
     {
         SetRun(false);
         EndScreenUI.SetActive(true);

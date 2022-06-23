@@ -1,15 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
     public Transform Container;
-
     public List<GameObject> Levels;
-
     public List<LevelPieceBaseSetup> LevelPieceBaseSetups;
+
+    [Header("Pieces Animations")]
+    public float timeBetweenPieces = .1f;
+    public float pieceScaleDuration = .2f;
+    public Ease pieceScaleEase = Ease.OutBack;
+
 
     private int _index;
     private GameObject _currentLevel;
@@ -57,13 +62,14 @@ public class LevelManager : MonoBehaviour
     }
     #endregion
 
-    #region Piece
+    #region Pieces
     private void CreateLevelPieces()
     {
         CleanSpawnedPieces();
+        CleanCoins();
 
         // Check the index of level piece base setup
-        if(_currentPBSetup != null)
+        if (_currentPBSetup != null)
         {
             _index++;
 
@@ -96,6 +102,9 @@ public class LevelManager : MonoBehaviour
 
         // Change the colors of scenario accordlying of current setup art type
         ColorManager.Instance.ChangeColorByType(_currentPBSetup.ArtType);
+
+        // Pieces Scale Coroutine
+        StartCoroutine(ScalePiecesByTime());
     }
 
     private void CreateLevelPiece(List<LevelPieceBase> levelPieces)
@@ -143,6 +152,38 @@ public class LevelManager : MonoBehaviour
 
         _spawnedPieces.Clear();
     }
+
+    private void CleanCoins()
+    {
+        for (int i = CoinAnimationManager.Instance.Coins.Count - 1; i > 0; i--)
+        {
+            Destroy(CoinAnimationManager.Instance.Coins[i].gameObject);
+        }
+
+        CoinAnimationManager.Instance.Coins.Clear();
+    }
     #endregion
 
+    #region Coroutines
+    private IEnumerator ScalePiecesByTime()
+    {
+        // Set the pieces scale to zero
+        _spawnedPieces.ForEach(data => data.transform.localScale = Vector3.zero);
+
+        // Wait a frame
+        yield return null;
+
+        for (int i = 0; i < _spawnedPieces.Count; i++)
+        {
+            // Do the scale
+            _spawnedPieces[i].transform.DOScale(1, pieceScaleDuration).SetEase(pieceScaleEase);
+
+            // Wait a time
+            yield return new WaitForSeconds(timeBetweenPieces);
+        }
+
+        // Coin Scale Coroutine
+        CoinAnimationManager.Instance.StartCoinAnimation();
+    }
+    #endregion
 }

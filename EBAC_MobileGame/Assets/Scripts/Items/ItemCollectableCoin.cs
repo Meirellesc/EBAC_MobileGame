@@ -7,12 +7,12 @@ public class ItemCollectableCoin : ItemCollectableBase
     public float LerpSpeed = 5f;
     public float MinDistance = 1f;
 
-    private bool _collected; 
+    private bool _collected;
 
-    protected override void OnCollect()
+
+    private void Start()
     {
-        base.OnCollect();
-        _collected = true;
+        CoinAnimationManager.Instance.RegisterCoin(this);   
     }
 
     private void Update()
@@ -27,5 +27,11 @@ public class ItemCollectableCoin : ItemCollectableBase
                 HideObject();
             }
         }
+    }
+
+    protected override void OnCollect()
+    {
+        base.OnCollect();
+        _collected = true;
     }
 }
