@@ -4,8 +4,23 @@ using UnityEngine;
 
 public class PowerUpBase : ItemCollectableBase
 {
+    [Header("Action Attributes")]
     public float duration;
 
+    [Header("Animation")]
+    public float RotationSpeed = 5f;
+
+    private void Start()
+    {
+        transform.Rotate(20f, 0f, 0f);
+    }
+
+    private void Update()
+    {
+        Rotate();
+    }
+
+    #region Actions
     protected override void OnCollect()
     {
         base.OnCollect();
@@ -19,4 +34,12 @@ public class PowerUpBase : ItemCollectableBase
     }
 
     protected virtual void EndPowerUp() { }
+    #endregion
+
+    #region Utils
+    private void Rotate()
+    {
+        transform.Rotate(0f, 45f * Time.deltaTime * RotationSpeed, 0f, Space.World);
+    }
+    #endregion
 }

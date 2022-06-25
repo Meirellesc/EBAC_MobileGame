@@ -46,6 +46,10 @@ public class PlayerController : Singleton<PlayerController>
     [Header("Text")]
     public TextMeshPro UiTextPowerUp;
 
+    [Header("Helpers")]
+    [SerializeField] private BounceHelper BounceHelper;
+    [SerializeField] private ScaleHelper ScaleHelper;
+
     private Vector3 _pos;
     private bool _canRun;
     private float _currentSpeed;
@@ -58,9 +62,13 @@ public class PlayerController : Singleton<PlayerController>
     #region Start / Update
     private void Start()
     {
+        // Set initial attributes
         UiTextPowerUp.text = "";
         _startPosition = transform.position;
         _initialCoinCollectorScale = CoinCollector.transform.localScale;
+
+        transform.localScale = Vector3.zero;
+
         ResetSpeed();
     }
 
@@ -131,6 +139,21 @@ public class PlayerController : Singleton<PlayerController>
     {
         CoinCollector.transform.localScale = _initialCoinCollectorScale;
     }
+
+    public void DoBounce()
+    {
+        BounceHelper.Bounce();
+    }
+
+    public void DoGrowScale()
+    {
+        ScaleHelper.Scale();
+    }
+
+    public void DoShrinkScale()
+    {
+        ScaleHelper.ScaleByEndValue(Vector3.zero);
+    }
     #endregion
 
     #region Colliders
@@ -151,7 +174,8 @@ public class PlayerController : Singleton<PlayerController>
     {
         if(other.transform.tag == TagEndLine)
         {
-            EndGame(PlayerAnimatorManager.AnimationType.IDLE); 
+            EndGame(PlayerAnimatorManager.AnimationType.IDLE);
+            DoShrinkScale();
         }
 
         if (other.transform.tag == TagLeftCamera)

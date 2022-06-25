@@ -28,6 +28,8 @@ public class ItemCollectableBase : MonoBehaviour
 
     protected virtual void OnCollect()
     {
+        PlayerController.Instance.DoBounce();
+
         //particleSystem?.Play();
         //audioSource?.Play();
     }

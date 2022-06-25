@@ -320,7 +320,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bff944ead56e0446f8fbd0cca663652d, type: 2}
   - {fileID: 11400000, guid: b4a454073a462443f881971d845ec7a3, type: 2}
   - {fileID: 11400000, guid: e7d9a9d6514ef4ec78e4ef9f45f13615, type: 2}
-  timeBetweenPieces: 0.1
+  timeBetweenPieces: 0.05
   pieceScaleDuration: 0.1
   pieceScaleEase: 27
 --- !u!1 &310330167
@@ -409,6 +409,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1960170563}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
         m_MethodName: StartGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1960170563}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: DoGrowScale
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2012,7 +2024,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1622421354}
-  m_LocalRotation: {x: 0.25202867, y: 0.11492547, z: -0.030158868, w: 0.9603979}
+  m_LocalRotation: {x: 0.25202867, y: 0.11492545, z: -0.030158859, w: 0.9603979}
   m_LocalPosition: {x: -2.7, y: 6.449998, z: -11.120003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2875,6 +2887,8 @@ GameObject:
   - component: {fileID: 1960170559}
   - component: {fileID: 1960170562}
   - component: {fileID: 1960170563}
+  - component: {fileID: 1960170558}
+  - component: {fileID: 1960170564}
   m_Layer: 0
   m_Name: PlayerContainer
   m_TagString: Player
@@ -2899,6 +2913,21 @@ Transform:
   m_Father: {fileID: 1413967511}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1960170558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1960170556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63904ea1610d24736bb73475cd534914, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BounceDuration: 0.05
+  BounceMaxScale: 1.2
+  ScaleEase: 1
 --- !u!65 &1960170559
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3005,6 +3034,23 @@ MonoBehaviour:
   CoinCollector: {fileID: 502586140}
   AnimatorManager: {fileID: 1993458803}
   UiTextPowerUp: {fileID: 1171147447}
+  BounceHelper: {fileID: 1960170558}
+  ScaleHelper: {fileID: 1960170564}
+--- !u!114 &1960170564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1960170556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8e6c9cca42784159914dfd3d55da9dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ScaleDuration: 1
+  MaxScale: 1
+  ScaleEase: 27
 --- !u!1001 &1993458799
 PrefabInstance:
   m_ObjectHideFlags: 0

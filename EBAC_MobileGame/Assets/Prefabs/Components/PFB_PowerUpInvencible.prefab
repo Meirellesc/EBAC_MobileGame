@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1873433832481212499}
   - component: {fileID: 1873433832481212496}
   - component: {fileID: 1873433832481212497}
+  - component: {fileID: 4164031506498586739}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -81,6 +82,21 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4164031506498586739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1873433832481212500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f8fc995ddbf549058ddc0f7b5636fdc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MeshRenderer: {fileID: 1873433832481212497}
+  InitialColor: {r: 1, g: 1, b: 1, a: 1}
+  LerpDuration: 1.5
 --- !u!1 &1873433834069956441
 GameObject:
   m_ObjectHideFlags: 0
@@ -145,3 +161,4 @@ MonoBehaviour:
   graphicItem: {fileID: 1873433832481212500}
   audioSource: {fileID: 0}
   duration: 5
+  RotationSpeed: 0

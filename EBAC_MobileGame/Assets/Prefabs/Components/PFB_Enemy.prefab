@@ -13,6 +13,9 @@ GameObject:
   - component: {fileID: 1100251281080462578}
   - component: {fileID: 3814010743333229596}
   - component: {fileID: 8437341758498784237}
+  - component: {fileID: 2131066150350761298}
+  - component: {fileID: 1047311573616436412}
+  - component: {fileID: 5153057158164663701}
   m_Layer: 0
   m_Name: PFB_Enemy
   m_TagString: Enemy
@@ -112,3 +115,46 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
+--- !u!114 &2131066150350761298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 851799952283029755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b17b5c1cc62754e219047b36dd8d0446, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ScaleHelper: {fileID: 5153057158164663701}
+--- !u!114 &1047311573616436412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 851799952283029755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f8fc995ddbf549058ddc0f7b5636fdc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MeshRenderer: {fileID: 1100251281080462578}
+  InitialColor: {r: 1, g: 1, b: 1, a: 1}
+  LerpDuration: 0.5
+--- !u!114 &5153057158164663701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 851799952283029755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8e6c9cca42784159914dfd3d55da9dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ScaleDuration: 2
+  MaxScale: 1
+  ScaleEase: 24

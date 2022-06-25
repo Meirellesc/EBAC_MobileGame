@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8207136338466167055}
   - component: {fileID: 4964544017045422604}
   - component: {fileID: 3614166509828050849}
+  - component: {fileID: 4856962639101002875}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -81,6 +82,21 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4856962639101002875
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 733657358499411580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f8fc995ddbf549058ddc0f7b5636fdc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MeshRenderer: {fileID: 3614166509828050849}
+  InitialColor: {r: 1, g: 1, b: 1, a: 1}
+  LerpDuration: 1
 --- !u!1 &8443506588566436059
 GameObject:
   m_ObjectHideFlags: 0
@@ -92,6 +108,7 @@ GameObject:
   - component: {fileID: 8443506588566436048}
   - component: {fileID: 8443506588566436061}
   - component: {fileID: 4378171725992498588}
+  - component: {fileID: 3458628303223797071}
   m_Layer: 0
   m_Name: PFB_Coin
   m_TagString: Untagged
@@ -125,7 +142,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.7
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4378171725992498588
 MonoBehaviour:
@@ -145,3 +162,18 @@ MonoBehaviour:
   audioSource: {fileID: 0}
   LerpSpeed: 7
   MinDistance: 1
+--- !u!114 &3458628303223797071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8443506588566436059}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78fd8e474383b45d9a857e560bf93623, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DurationBetweenTargets: 1
+  MaxHeight: 0.1
+  MinHeight: 0.1
