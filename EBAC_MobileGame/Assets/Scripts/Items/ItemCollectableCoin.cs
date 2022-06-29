@@ -9,6 +9,12 @@ public class ItemCollectableCoin : ItemCollectableBase
 
     private bool _collected;
 
+    [SerializeField] private FloatHelper _floatHelper;
+
+    private void OnValidate()
+    {
+        _floatHelper = GetComponent<FloatHelper>();
+    }
 
     private void Start()
     {
@@ -31,6 +37,7 @@ public class ItemCollectableCoin : ItemCollectableBase
 
     protected override void OnCollect()
     {
+        _floatHelper.Stop();
         base.OnCollect();
         _collected = true;
     }

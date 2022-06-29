@@ -12,6 +12,8 @@ public class FloatHelper : MonoBehaviour
     private List<Vector3> _targetPositions = new List<Vector3>();
     private int _targetIndex = 0;
 
+    private bool _isFloating;
+
     private void Start()
     {
         SetUpTargets();
@@ -21,7 +23,14 @@ public class FloatHelper : MonoBehaviour
         transform.localPosition = _targetPositions[_targetIndex];
         NextTargetIndex();
 
-        StartCoroutine(StartFloat());
+        _isFloating = true;
+        StartCoroutine(FloatCoroutine());
+    }
+
+    public void Stop()
+    {
+        _isFloating = false;
+        StopAllCoroutines();
     }
 
     private void SetUpTargets()
@@ -36,11 +45,11 @@ public class FloatHelper : MonoBehaviour
         _targetPositions.Add(minTarget);
     }
 
-    IEnumerator StartFloat()
+    IEnumerator FloatCoroutine()
     {
         float time = 0;
 
-        while (true)
+        while (_isFloating)
         {
             // Keeps the current position
             Vector3 currentPosition = transform.localPosition;

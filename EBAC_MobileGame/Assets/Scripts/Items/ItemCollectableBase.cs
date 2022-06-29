@@ -8,7 +8,7 @@ public class ItemCollectableBase : MonoBehaviour
     public float timeToHide = 3f;
 
     public GameObject graphicItem;
-    //public ParticleSystem particleSystem;
+    public ParticleSystem ParticleSystem;
 
     [Header("Sounds")]
     public AudioSource audioSource;
@@ -30,8 +30,22 @@ public class ItemCollectableBase : MonoBehaviour
     {
         PlayerController.Instance.DoBounce();
 
-        //particleSystem?.Play();
+        if (ParticleSystem != null)
+        {
+            ParticleSystem.transform.SetParent(null);
+            ParticleSystem.Play();
+
+            Invoke(nameof(StopParticleSystem), 1f);
+        }
         //audioSource?.Play();
+    }
+
+    private void StopParticleSystem()
+    {
+        if(ParticleSystem != null)
+        {
+            ParticleSystem.Stop();
+        }
     }
 
 }
