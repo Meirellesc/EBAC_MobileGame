@@ -43,6 +43,9 @@ public class PlayerController : Singleton<PlayerController>
     [Header("Animator")]
     public PlayerAnimatorManager AnimatorManager;
 
+    [Header("Particle")]
+    public ParticleSystem VfxParticleDead;
+
     [Header("Text")]
     public TextMeshPro UiTextPowerUp;
 
@@ -166,6 +169,10 @@ public class PlayerController : Singleton<PlayerController>
                 MoveTransformZ(collision.transform, 0.7f, 0.3f);
                 MoveTransformZ(this.transform, -0.7f, 0.3f);
                 EndGame(PlayerAnimatorManager.AnimationType.DEAD);
+                if (VfxParticleDead != null)
+                {
+                    VfxParticleDead.Play();
+                }
             }
         }
     }
