@@ -157,6 +157,11 @@ public class PlayerController : Singleton<PlayerController>
     {
         ScaleHelper.ScaleByEndValue(Vector3.zero);
     }
+
+    public bool CheckIsInvencible()
+    {
+        return _isInvencible;
+    }
     #endregion
 
     #region Colliders
