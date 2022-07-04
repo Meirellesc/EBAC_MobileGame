@@ -11,6 +11,9 @@ public class TouchController : MonoBehaviour
     private Vector2 touchStartPos;
     private Vector2 touchEndPos;
 
+    [Header("Movement Boundaries")]
+    public Vector2 XBoundary = new Vector2(-5, 5);
+
     void Update()
     {
         InputKeyboard();
@@ -57,6 +60,14 @@ public class TouchController : MonoBehaviour
 
     private void Move(float delta)
     {
-        transform.position += Vector3.right * Time.deltaTime * delta * speed;
+        Vector3 pos = transform.position;
+
+        pos += Vector3.right * Time.deltaTime * delta * speed;
+
+        // Check the X axis boundaries
+        if (pos.x < XBoundary.x) { pos.x = XBoundary.x; }
+        else if (pos.x > XBoundary.y) { pos.x = XBoundary.y; }
+
+        transform.position = pos;
     }
 }
